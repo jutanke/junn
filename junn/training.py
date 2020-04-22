@@ -24,6 +24,7 @@ class Trainer:
                  max_epoch=999):
         if not isinstance(models, list):
             models = [models]
+        torch.manual_seed(models[0].model_seed)
         self.models = models
         self.device = device
         self.save_only_best_model = save_only_best_model
