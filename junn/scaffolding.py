@@ -7,6 +7,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 from junn.settings import get_data_loc
+import pandas as pd
 
 
 class Scaffolding(nn.Module):
@@ -50,7 +51,9 @@ class Scaffolding(nn.Module):
         if isfile(self.get_weights_file()):
             checkpoint = torch.load(self.get_weights_file())
             self.load_state_dict(checkpoint['model_state_dict'])
+            self.is_weights_loaded = True
             return True
+        self.is_weights_loaded = False
         return False
 
     def save_weights(self, epoch=-1, optim=None):
