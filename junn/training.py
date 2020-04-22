@@ -60,7 +60,7 @@ class Trainer:
         """
         return ['loss']
     
-    def format_loss(losses):
+    def format_loss(self, losses):
         if not isinstance(losses, list):
             losses = [losses]
         names = self.loss_names()
