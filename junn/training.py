@@ -186,7 +186,7 @@ class Trainer:
                 if lowest_test_loss is None or val_loss < lowest_test_loss:
                     lowest_test_loss = val_loss
                     if self.verbose:
-                        print('\t' + bcolors.OKBLUE 'save:' + bcolors.ENDC, lowest_test_loss)
+                        print('\t' + bcolors.OKBLUE + 'save:' + bcolors.ENDC, lowest_test_loss)
 
                     for model in models:
                         model.save_weights()
