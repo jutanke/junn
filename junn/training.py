@@ -162,7 +162,7 @@ class Trainer:
                         val_losses = [val_losses]
                     
                     for i, name in enumerate(self.loss_names()):
-                    Val_losses[name].append(val_losses[i])
+                        Val_losses[name].append(val_losses[i])
 
                     val_losses = []
                     for name in self.loss_names():
