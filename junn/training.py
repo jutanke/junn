@@ -74,7 +74,7 @@ class Trainer:
             train_losses = [train_losses]
         if not isinstance(val_losses, list):
             val_losses = [val_losses]
-        names = self.loss_names
+        names = self.loss_names()
         assert len(names) == len(train_losses)
         assert len(names) == len(val_losses)
         
@@ -119,7 +119,7 @@ class Trainer:
 
             Train_losses = {}
             Val_losses = {}
-            for name in self.loss_names:
+            for name in self.loss_names():
                 Train_losses[name] = []
                 Val_losses[name] = []
 
