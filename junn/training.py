@@ -115,7 +115,7 @@ class Trainer:
         lowest_test_loss = self.lowest_test_loss
         models = self.models
 
-        for epoch in range(last_epoch, MAX_EPOCH):
+        for epoch in range(start_epoch, MAX_EPOCH):
 
             Train_losses = {}
             Val_losses = {}
