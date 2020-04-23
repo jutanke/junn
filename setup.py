@@ -2,5 +2,5 @@ from distutils.core import setup
 
 setup(
     name="junn",
-    version="0.0.13",
+    version="1.0.0",
     packages=["junn"])
