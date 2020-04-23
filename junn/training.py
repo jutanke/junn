@@ -60,6 +60,18 @@ class Trainer:
             txt += '\n[' + str(i) + ']\t->\t' + model.prettyprint_number_of_parameters()
         return txt
     
+    def are_all_weights_loaded(self):
+        all_weights_are_loaded = True
+        for i, model in enumerate(self.models):
+            if not model.is_weights_loaded:
+                all_weights_are_loaded = False
+                if verbose:
+                    print('\t[' + str(i) + '] ' + bcolors.WARNING + '[not loaded]' + bcolors.ENDC)
+            else:
+                if verbose:
+                    print('\t[' + str(i) + '] ' + bcolors.OKGREEN + '[loaded]' + bcolors.ENDC)
+        return all_weights_are_loaded
+    
     def loss_names(self):
         """ defines the names of the losses.
             Must coincide with the number of returned
