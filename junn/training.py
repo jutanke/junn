@@ -6,6 +6,7 @@ from abc import abstractmethod
 import numpy as np
 import pandas as pd
 from junn.settings import get_data_loc
+import shutil
 
 
 class bcolors:
@@ -25,12 +26,18 @@ class Trainer:
                  load_weights_if_possible=True,
                  verbose=True, instant_run=True,
                  save_only_best_model=True,
+                 force_new_training=False,
                  put_all_models_in_common_dir=True,
                  max_epoch=999):
         if not isinstance(models, list):
             models = [models]
         if put_all_models_in_common_dir and len(models) > 1:
             rootdir = join(get_data_loc(), self.get_folder_name())
+            
+            if isdir(rootdir) and force_new_training:
+                print('\tdelete dir:', rootdir)
+                shutil.rmtree(rootdir)
+            
             if not isdir(rootdir):
                 makedirs(rootdir)
             for model in models:
