@@ -54,6 +54,12 @@ class Trainer:
         self.last_epoch = last_epoch
         self.lowest_test_loss = lowest_test_loss
     
+    def prettyprint_number_of_parameters(self):
+        txt = '\n'
+        for i, model in enumerate(self.models):
+            txt += '[' + str(i) + ']\t->\t' + model.prettyprint_number_of_parameters()
+        return txt
+    
     def loss_names(self):
         """ defines the names of the losses.
             Must coincide with the number of returned
