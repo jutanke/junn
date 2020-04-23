@@ -65,10 +65,10 @@ class Trainer:
         for i, model in enumerate(self.models):
             if not model.is_weights_loaded:
                 all_weights_are_loaded = False
-                if verbose:
+                if self.verbose:
                     print('\t[' + str(i) + '] ' + bcolors.WARNING + '[not loaded]' + bcolors.ENDC)
             else:
-                if verbose:
+                if self.verbose:
                     print('\t[' + str(i) + '] ' + bcolors.OKGREEN + '[loaded]' + bcolors.ENDC)
         return all_weights_are_loaded
     
