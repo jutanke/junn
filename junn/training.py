@@ -55,9 +55,9 @@ class Trainer:
         self.lowest_test_loss = lowest_test_loss
     
     def prettyprint_number_of_parameters(self):
-        txt = '\n'
+        txt = ''
         for i, model in enumerate(self.models):
-            txt += '[' + str(i) + ']\t->\t' + model.prettyprint_number_of_parameters()
+            txt += '\n[' + str(i) + ']\t->\t' + model.prettyprint_number_of_parameters()
         return txt
     
     def loss_names(self):
