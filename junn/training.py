@@ -1,9 +1,11 @@
 import torch
 from tqdm.auto import tqdm
-from os.path import isfile, isdir, join
+from os.path import isfile, isdir, join, isdir
+from os import makedirs
 from abc import abstractmethod
 import numpy as np
 import pandas as pd
+from junn.settings import get_data_loc
 
 
 class bcolors:
@@ -23,9 +25,16 @@ class Trainer:
                  load_weights_if_possible=True,
                  verbose=True, instant_run=True,
                  save_only_best_model=True,
+                 put_all_models_in_common_dir=True,
                  max_epoch=999):
         if not isinstance(models, list):
             models = [models]
+        if put_all_models_in_common_dir and len(models) > 1:
+            rootdir = join(get_data_loc(), self.get_folder_name())
+            if not isdir(rootdir):
+                makedirs(rootdir)
+            for model in models:
+                model.data_loc = rootdir
         torch.manual_seed(models[0].model_seed)
         self.models = models
         self.device = device
@@ -115,7 +124,10 @@ class Trainer:
         else:
             with open(self.training_log_file, 'w') as f:
                 df.to_csv(f, header=True)
-
+    
+    def get_folder_name(self):
+        raise NotImplementedError
+        
     @abstractmethod
     def train_step(self, Data, optim):
         raise NotImplementedError
