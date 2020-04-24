@@ -141,11 +141,11 @@ class Trainer:
         raise NotImplementedError
         
     @abstractmethod
-    def train_step(self, Data, optim):
+    def train_step(self, epoch, Data, optim):
         raise NotImplementedError
 
     @abstractmethod
-    def val_step(self, Data):
+    def val_step(self, epoch, Data):
         raise NotImplementedError
 
     def run(self, dl_train, dl_val, optim, optim_scheduler=None):
@@ -180,7 +180,7 @@ class Trainer:
                         d.to(self.device)
                 else:
                     Data.to(self.device)
-                train_losses = self.train_step(Data, optim)
+                train_losses = self.train_step(epoch, Data, optim)
                 if not isinstance(train_losses, list) and not isinstance(train_losses, tuple):
                     train_losses = [train_losses]
                 
@@ -203,7 +203,7 @@ class Trainer:
                 else:
                     Data.to(self.device)
                 with torch.no_grad():
-                    val_losses = self.val_step(Data)      
+                    val_losses = self.val_step(epoch, Data)      
                     if not isinstance(val_losses, list) and not isinstance(val_losses, tuple):
                         val_losses = [val_losses]
                     
