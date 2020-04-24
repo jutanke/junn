@@ -20,18 +20,24 @@ class Scaffolding(nn.Module):
         super(Scaffolding, self).__init__()
         self.data_loc = get_data_loc()
         self.model_seed = model_seed
-        train_dir = self.get_train_dir()
-        if isdir(train_dir) and force_new_training:
-            print('[hma-with-symbolic-label][model] - delete dir:', train_dir)
-            shutil.rmtree(train_dir)
-            time.sleep(.5)
-        if not isdir(train_dir):
-            makedirs(train_dir)
-
-        fweights = self.get_weights_file()
         self.is_weights_loaded = False
-        if isfile(fweights):
-            self.is_weights_loaded = True
+        self.force_new_training = force_new_training
+        self.___is_init = False
+    
+    def init(self):
+        if not self.___is_init:
+            force_new_training = self.force_new_training
+            train_dir = self.get_train_dir()
+            if isdir(train_dir) and force_new_training:
+                print('[hma-with-symbolic-label][model] - delete dir:', train_dir)
+                shutil.rmtree(train_dir)
+                time.sleep(.5)
+            if not isdir(train_dir):
+                makedirs(train_dir)
+            fweights = self.get_weights_file()
+            if isfile(fweights):
+                self.is_weights_loaded = True
+            self.___is_init = True
 
     @abstractmethod
     def get_unique_directory(self):
@@ -48,6 +54,7 @@ class Scaffolding(nn.Module):
         return '{:,}'.format(n_params)
 
     def load_weights_if_possible(self):
+        self.init()
         if isfile(self.get_weights_file()):
             checkpoint = torch.load(self.get_weights_file())
             self.load_state_dict(checkpoint['model_state_dict'])
@@ -70,13 +77,15 @@ class Scaffolding(nn.Module):
             }, self.get_weights_file())
 
     def get_train_dir(self):
-        #/home/user/
+        self.init()
         return join(join(join(self.data_loc, 'training'), self.get_unique_directory()),
                     'seed' + str(self.model_seed))
 
 
     def get_weights_file(self):
+        self.init()
         return join(self.get_train_dir(), 'weights.h5')
 
     def get_log_file(self):
+        self.init()
         return join(self.get_train_dir(), 'training.csv')

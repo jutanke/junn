@@ -41,7 +41,12 @@ class Trainer:
             if not isdir(rootdir):
                 makedirs(rootdir)
             for model in models:
+                assert not model.___is_init, "model must not be initialized!"
                 model.data_loc = rootdir
+        
+        for model in models:
+            model.init()
+
         torch.manual_seed(models[0].model_seed)
         self.models = models
         self.device = device
