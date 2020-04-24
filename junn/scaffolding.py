@@ -54,7 +54,6 @@ class Scaffolding(nn.Module):
         return '{:,}'.format(n_params)
 
     def load_weights_if_possible(self):
-        self.init()
         if isfile(self.get_weights_file()):
             checkpoint = torch.load(self.get_weights_file())
             self.load_state_dict(checkpoint['model_state_dict'])
@@ -77,15 +76,12 @@ class Scaffolding(nn.Module):
             }, self.get_weights_file())
 
     def get_train_dir(self):
-        self.init()
         return join(join(join(self.data_loc, 'training'), self.get_unique_directory()),
                     'seed' + str(self.model_seed))
 
 
     def get_weights_file(self):
-        self.init()
         return join(self.get_train_dir(), 'weights.h5')
 
     def get_log_file(self):
-        self.init()
         return join(self.get_train_dir(), 'training.csv')
