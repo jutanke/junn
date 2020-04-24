@@ -22,10 +22,10 @@ class Scaffolding(nn.Module):
         self.model_seed = model_seed
         self.is_weights_loaded = False
         self.force_new_training = force_new_training
-        self.___is_init = False
+        self.scaffolding_is_init = False
     
     def init(self):
-        if not self.___is_init:
+        if not self.scaffolding_is_init:
             force_new_training = self.force_new_training
             train_dir = self.get_train_dir()
             if isdir(train_dir) and force_new_training:
@@ -37,7 +37,7 @@ class Scaffolding(nn.Module):
             fweights = self.get_weights_file()
             if isfile(fweights):
                 self.is_weights_loaded = True
-            self.___is_init = True
+            self.scaffolding_is_init = True
 
     @abstractmethod
     def get_unique_directory(self):

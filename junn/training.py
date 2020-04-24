@@ -41,7 +41,7 @@ class Trainer:
             if not isdir(rootdir):
                 makedirs(rootdir)
             for model in models:
-                assert not model.___is_init, "model must not be initialized!"
+                assert not model.scaffolding_is_init, "model must not be initialized!"
                 model.data_loc = rootdir
         
         for model in models:
