@@ -18,7 +18,6 @@ class Scaffolding(nn.Module):
         :param model_seed: identifiy different training runs for the same model
         """
         super(Scaffolding, self).__init__()
-        self.data_loc = get_data_loc()
         self.project_folder = ''
         self.model_seed = model_seed
         self.is_weights_loaded = False
@@ -77,12 +76,13 @@ class Scaffolding(nn.Module):
             }, self.get_weights_file())
 
     def get_train_dir(self):
-        train_dir = join(self.data_loc, 'training')
+        
         if len(self.project_folder) > 0:
-            train_dir = join(train_dir, self.project_folder)
+            train_dir = self.project_folder
+        else:
+            train_dir = join(get_data_loc(), 'training')
         return join(join(train_dir, self.get_unique_directory()),
                     'seed' + str(self.model_seed))
-
 
     def get_weights_file(self):
         return join(self.get_train_dir(), 'weights.h5')

@@ -32,7 +32,7 @@ class Trainer:
         if not isinstance(models, list):
             models = [models]
         if put_all_models_in_common_dir and len(models) > 1:
-            rootdir = join(get_data_loc(), self.get_folder_name())
+            rootdir = join(join(get_data_loc(), 'training'), self.get_folder_name())
             
             if isdir(rootdir) and force_new_training:
                 print('\tdelete dir:', rootdir)
