@@ -42,7 +42,7 @@ class Trainer:
                 makedirs(rootdir)
             for model in models:
                 assert not model.scaffolding_is_init, "model must not be initialized!"
-                model.data_loc = rootdir
+                model.project_folder = rootdir
         
         for model in models:
             model.init()
