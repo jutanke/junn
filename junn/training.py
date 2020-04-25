@@ -31,9 +31,10 @@ class Trainer:
                  max_epoch=999):
         if not isinstance(models, list):
             models = [models]
+        self.data_loc_dir = ''
         if put_all_models_in_common_dir and len(models) > 1:
             rootdir = join(join(get_data_loc(), 'training'), self.get_folder_name())
-            
+            self.data_loc_dir = rootdir
             if isdir(rootdir) and force_new_training:
                 print('\tdelete dir:', rootdir)
                 shutil.rmtree(rootdir)
@@ -61,7 +62,8 @@ class Trainer:
                     print('\t' + bcolors.FAIL + '[weights not loaded]' + bcolors.ENDC)
             model.to(device)
         
-        self.training_log_file = models[0].get_log_file()
+        # self.training_log_file = models[0].get_log_file()
+        self.training_log_file = self.get_log_file()
 
         last_epoch = 0
         lowest_test_loss = None
@@ -74,6 +76,13 @@ class Trainer:
             lowest_test_loss = min(data[key].values)
         self.last_epoch = last_epoch
         self.lowest_test_loss = lowest_test_loss
+    
+    def get_log_file(self):
+        if len(self.data_loc_dir) > 0:
+            return join(self.data_loc_dir, 'training.csv')
+        else:
+            return self.models[0].get_log_file()
+
     
     def prettyprint_number_of_parameters(self):
         txt = ''
