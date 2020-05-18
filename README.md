@@ -45,7 +45,7 @@ class MyModel(Scaffolding):
         return self.model(x)
 ```
 
-### Scaffolding
+### Trainer
 ```python
 import torch
 from junn.training import Trainer
