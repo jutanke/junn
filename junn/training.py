@@ -247,4 +247,4 @@ class Trainer:
                         model.save_weights()
             else:
                 for model in models:
-                    model.save_weights()
+                    model.save_weights(name='ep%04d' % epoch)
