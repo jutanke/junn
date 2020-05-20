@@ -12,12 +12,13 @@ import pandas as pd
 
 class Scaffolding(nn.Module):
 
-    def __init__(self, force_new_training, model_seed=0):
+    def __init__(self, force_new_training, model_seed=0, name=''):
         """
         :param force_new_training:
         :param model_seed: identifiy different training runs for the same model
         """
         super(Scaffolding, self).__init__()
+        self.name = name
         self.project_folder = ''
         self.model_seed = model_seed
         self.is_weights_loaded = False
@@ -55,7 +56,7 @@ class Scaffolding(nn.Module):
 
     def load_weights_if_possible(self):
         if isfile(self.get_weights_file()):
-            checkpoint = torch.load(self.get_weights_file())
+            checkpoint = torch.load(self.get_weights_file(name=self.name))
             self.load_state_dict(checkpoint['model_state_dict'])
             self.is_weights_loaded = True
             return True
