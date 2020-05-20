@@ -62,18 +62,18 @@ class Scaffolding(nn.Module):
         self.is_weights_loaded = False
         return False
 
-    def save_weights(self, epoch=-1, optim=None):
+    def save_weights(self, epoch=-1, optim=None, name=''):
         if optim is None:
             torch.save({
                 'epoch': epoch,
                 'model_state_dict': self.state_dict()
-            }, self.get_weights_file())
+            }, self.get_weights_file(name=name))
         else:
             torch.save({
                 'epoch': epoch,
                 'model_state_dict': self.state_dict(),
                 'optim_state_dict': optim.state_dict()
-            }, self.get_weights_file())
+            }, self.get_weights_file(name=name))
 
     def get_train_dir(self):
         
@@ -84,8 +84,8 @@ class Scaffolding(nn.Module):
         return join(join(train_dir, self.get_unique_directory()),
                     'seed' + str(self.model_seed))
 
-    def get_weights_file(self):
-        return join(self.get_train_dir(), 'weights.h5')
+    def get_weights_file(self, name=''):
+        return join(self.get_train_dir(), 'weights' + name + '.h5')
 
     def get_log_file(self):
         return join(self.get_train_dir(), 'training.csv')
