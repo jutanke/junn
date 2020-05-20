@@ -55,7 +55,7 @@ class Scaffolding(nn.Module):
         return '{:,}'.format(n_params)
 
     def load_weights_if_possible(self):
-        if isfile(self.get_weights_file()):
+        if isfile(self.get_weights_file(name=self.name)):
             checkpoint = torch.load(self.get_weights_file(name=self.name))
             self.load_state_dict(checkpoint['model_state_dict'])
             self.is_weights_loaded = True
