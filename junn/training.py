@@ -235,7 +235,11 @@ class Trainer:
 
             val_loss = val_losses[0]  # we define this as being the "standard"
             if optim_scheduler is not None:
-                optim_scheduler.step(val_loss)
+                if isinstance(optim_scheduler, list):
+                    for oo in optim_scheduler:
+                        oo.step(val_loss)
+                else:
+                    optim_scheduler.step(val_loss)
 
             if self.save_only_best_model:
                 if lowest_test_loss is None or val_loss < lowest_test_loss:
