@@ -251,4 +251,5 @@ class Trainer:
                         model.save_weights()
             else:
                 for model in models:
-                    model.save_weights(name='ep%04d' % epoch)
+                    model.save_weights(name='_ep%04d' % epoch)
+                    model.save_weights()  # always saves last weight
