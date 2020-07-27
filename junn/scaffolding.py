@@ -12,7 +12,7 @@ import pandas as pd
 
 class Scaffolding(nn.Module):
 
-    def __init__(self, force_new_training, model_seed=0, name=''):
+    def __init__(self, force_new_training, model_seed=0, name='', verbose=True):
         """
         :param force_new_training:
         :param model_seed: identifiy different training runs for the same model
@@ -24,6 +24,7 @@ class Scaffolding(nn.Module):
         self.is_weights_loaded = False
         self.force_new_training = force_new_training
         self.scaffolding_is_init = False
+        self.verbose = verbose
     
     def init(self):
         if not self.scaffolding_is_init:
@@ -63,6 +64,10 @@ class Scaffolding(nn.Module):
         self.is_weights_loaded = False
         return False
     
+    def load_weights_for_epoch(self, epoch):
+        fname = 'weights_ep%04d.h5' % epoch
+        self.load_specific_weights(fname)
+    
     def load_specific_weights(self, fname):
         """
         """
@@ -73,6 +78,8 @@ class Scaffolding(nn.Module):
         checkpoint = torch.load(fname)
         self.load_state_dict(checkpoint['model_state_dict'])
         self.is_weights_loaded = True
+        if self.verbose:
+            print('LOADED: ', fname)
     
     def count_trained_epochs(self):
         fname = self.get_log_file()
