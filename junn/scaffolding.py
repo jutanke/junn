@@ -1,7 +1,7 @@
 from abc import abstractmethod
 import time
-from os.path import isdir, join, isfile
-from os import makedirs
+from os.path import isdir, isfile, join, isfile, dirname
+from os import makedirs, listdir
 import shutil
 import numpy as np
 import torch
@@ -62,7 +62,24 @@ class Scaffolding(nn.Module):
             return True
         self.is_weights_loaded = False
         return False
+    
+    def load_specific_weights(self, fname):
+        """
+        """
+        if not isfile(fname):
+            loc = dirname(self.get_weights_file())
+            fname = join(loc, fname)
+        assert isfile(fname), fname
+        checkpoint = torch.load(fname)
+        self.load_state_dict(checkpoint['model_state_dict'])
+        self.is_weights_loaded = True
 
+    def list_all_weights_in_training_dir(self):
+        """ lists all the weights file that were written
+        """
+        loc = dirname(self.get_weights_file())
+        return [f for f in sorted(listdir(loc)) if f.startswith('weight') and f.endswith('.h5')]
+    
     def save_weights(self, epoch=-1, optim=None, name=''):
         if optim is None:
             torch.save({
