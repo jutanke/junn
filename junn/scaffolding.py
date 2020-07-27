@@ -73,6 +73,14 @@ class Scaffolding(nn.Module):
         checkpoint = torch.load(fname)
         self.load_state_dict(checkpoint['model_state_dict'])
         self.is_weights_loaded = True
+    
+    def count_trained_epochs(self):
+        fname = self.get_log_file()
+        if isfile(fname):
+            ff = pd.read_csv('./adam0005.csv')
+            return max(ff['epoch'])
+        else:
+            return 0
 
     def list_all_weights_in_training_dir(self):
         """ lists all the weights file that were written
