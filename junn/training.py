@@ -134,7 +134,7 @@ class Trainer:
 
         for loss, name in zip(train_losses, names):
             data_entry['train_' + name] = [loss]
-        for loss, name in zip(train_losses, names):
+        for loss, name in zip(val_losses, names):
             data_entry['val_' + name] = [loss]
 
         df = pd.DataFrame(data_entry)
