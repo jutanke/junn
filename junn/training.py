@@ -253,3 +253,8 @@ class Trainer:
                 for model in models:
                     model.save_weights(name='_ep%04d' % epoch)
                     model.save_weights()  # always saves last weight
+                    if lowest_test_loss is None or val_loss < lowest_test_loss:
+                        lowest_test_loss = val_loss
+                        model.save_weights(name='_best')
+                        if self.verbose:
+                            print('\t' + bcolors.OKBLUE + 'save:' + bcolors.ENDC, lowest_test_loss)
