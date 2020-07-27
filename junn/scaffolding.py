@@ -77,7 +77,7 @@ class Scaffolding(nn.Module):
     def count_trained_epochs(self):
         fname = self.get_log_file()
         if isfile(fname):
-            ff = pd.read_csv('./adam0005.csv')
+            ff = pd.read_csv(fname)
             return max(ff['epoch'])
         else:
             return 0
