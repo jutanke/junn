@@ -8,6 +8,7 @@ import torch
 import torch.nn as nn
 from junn.settings import get_data_loc
 import pandas as pd
+from tqdm.auto import tqdm
 
 
 class Scaffolding(nn.Module):
@@ -88,6 +89,29 @@ class Scaffolding(nn.Module):
             return max(ff['epoch'])
         else:
             return 0
+
+    def find_best_weight(self, callback_fn, return_all_scores=False):
+        """
+        :param callback_fn: {function} def callback_fn(model): {return score}
+        """
+        is_verbose_bkp = self.verbose
+        self.verbose = False
+        weight_files = self.list_all_weights_in_training_dir()
+        assert len(weight_files) > 0, "There are no weight files!"
+
+        scores = []
+        for wfile in tqdm(weight_files):
+            self.load_specific_weights(wfile)
+            score = callback_fn(self)
+            scores.append(score)
+        best_score = np.argmin(scores)
+        
+        self.verbose = is_verbose_bkp  # reset verbose to old state
+
+        if return_all_scores:
+            return scores, weight_files
+        else:
+            return weight_files[best_score]
 
     def list_all_weights_in_training_dir(self):
         """ lists all the weights file that were written
