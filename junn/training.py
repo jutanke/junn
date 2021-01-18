@@ -201,34 +201,38 @@ class Trainer:
                     train_losses.append(np.mean(Train_losses[name]))
                 
                 train_tqdm.set_description('[train] ' + self.format_loss(train_losses))
+                
+            if dl_val is not None:
+                for model in models:
+                    model.eval()
+                val_tqdm = tqdm(dl_val)
+                for Data in val_tqdm:
+                    if isinstance(Data, list) or isinstance(Data, tuple):
+                        for d in Data:
+                            d.to(self.device)
+                    else:
+                        Data.to(self.device)
+                    with torch.no_grad():
+                        val_losses = self.val_step(epoch, Data)      
+                        if not isinstance(val_losses, list) and not isinstance(val_losses, tuple):
+                            val_losses = [val_losses]
 
-            for model in models:
-                model.eval()
-            val_tqdm = tqdm(dl_val)
-            for Data in val_tqdm:
-                if isinstance(Data, list) or isinstance(Data, tuple):
-                    for d in Data:
-                        d.to(self.device)
-                else:
-                    Data.to(self.device)
-                with torch.no_grad():
-                    val_losses = self.val_step(epoch, Data)      
-                    if not isinstance(val_losses, list) and not isinstance(val_losses, tuple):
-                        val_losses = [val_losses]
-                    
-                    for i, name in enumerate(self.loss_names()):
-                        Val_losses[name].append(val_losses[i])
+                        for i, name in enumerate(self.loss_names()):
+                            Val_losses[name].append(val_losses[i])
 
-                    val_losses = []
-                    for name in self.loss_names():
-                        val_losses.append(np.mean(Val_losses[name]))
-                    
-                    val_tqdm.set_description('[val] ' + self.format_loss(val_losses))
+                        val_losses = []
+                        for name in self.loss_names():
+                            val_losses.append(np.mean(Val_losses[name]))
+
+                        val_tqdm.set_description('[val] ' + self.format_loss(val_losses))
 
             val_losses = []
             train_losses = []
             for name in self.loss_names():
-                val_losses.append(np.mean(Val_losses[name]))
+                if dl_val is None:
+                    val_losses.append(np.mean(Train_losses[name]))
+                else:
+                    val_losses.append(np.mean(Val_losses[name]))
                 train_losses.append(np.mean(Train_losses[name]))
             
             self.store_losses_to_file(epoch, train_losses, val_losses)
