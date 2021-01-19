@@ -90,6 +90,9 @@ class Trainer:
             txt += '\n[' + str(i) + ']\t->\t' + model.prettyprint_number_of_parameters()
         return txt
     
+    def on_epoch_end(self, epoch):
+        pass
+    
     def are_all_weights_loaded(self):
         all_weights_are_loaded = True
         for i, model in enumerate(self.models):
@@ -236,6 +239,7 @@ class Trainer:
                 train_losses.append(np.mean(Train_losses[name]))
             
             self.store_losses_to_file(epoch, train_losses, val_losses)
+            self.on_epoch_end(epoch)
 
             val_loss = val_losses[0]  # we define this as being the "standard"
             if optim_scheduler is not None:
