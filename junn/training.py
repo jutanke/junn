@@ -1,5 +1,5 @@
 import torch
-from tqdm.auto import tqdm
+from tqdm import tqdm
 from os.path import isfile, isdir, join, isdir
 from os import makedirs
 from abc import abstractmethod
