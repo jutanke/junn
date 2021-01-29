@@ -188,7 +188,7 @@ class AbstractTrainer:
                 Val_losses[name] = []
 
             if self.verbose:
-                console.info(f"epoch {epoch}", self.get_train_dir())
+                console.info(f"epoch {epoch} -> " + self.get_train_dir())
 
             # ~~ TRAIN STEP ~~
             for net, _ in models.values():
