@@ -18,10 +18,10 @@ python setup.py install
 ```python
 import torch
 import torch.nn as nn
-from junn.trainer import Trainer
+from junn.trainer import AbstractTrainer
 
 
-class MyTrainer(Trainer):
+class MyTrainer(AbstractTrainer):
     def __init__(device, force_new_training=False):
         
         # any sort of parametrization
