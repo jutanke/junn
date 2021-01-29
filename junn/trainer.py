@@ -174,7 +174,7 @@ class AbstractTrainer:
         :param dl_train: {pytorch dataloader}
         :param dl_val: {pytorch dataloader}
         """
-        start_epoch = self.last_epoch
+        start_epoch = self.current_epoch
         end_epoch = self.max_epoch
         models = self.models
 
