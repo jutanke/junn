@@ -35,7 +35,7 @@ def load_models(models: Dict, training_path: str, epoch: int = -1):
         assert isfile(fname), fname
         checkpoint = torch.load(fname)
         net.load_state_dict(checkpoint["model_state_dict"])
-        opt.load_state_dict(checkpoint["model_state_dict"])
+        opt.load_state_dict(checkpoint["optim_state_dict"])
 
 
 def save_models(models: Dict, epoch: int, training_path: str, save_for_epoch=True):
