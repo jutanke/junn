@@ -1,6 +1,7 @@
 import torch
 import junn.utils as utils
 import shutil
+import json
 
 from abc import abstractmethod
 from tqdm import tqdm
@@ -55,6 +56,12 @@ class AbstractTrainer:
             makedirs(train_dir)
         elif verbose:
             console.verbose(f"found train dir {train_dir}")
+            
+        # -- save parameters --
+        fname_params = join(train_dir, "train_params.json")
+        if not isfile(fname_params):
+            with open(fname_params, "w") as f:
+                json.dump(train_params, f)
 
         # -- tensorboard --
         self.writer = SummaryWriter(log_dir=join(self.get_train_dir(), "tfboard"))
