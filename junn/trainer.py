@@ -70,7 +70,7 @@ class AbstractTrainer:
         # -- load log file --
         fname_log = self.get_log_file()
         if isfile(fname_log):
-            data = pd.read_csv(self.training_log_file)
+            data = pd.read_csv(self.get_log_file())
             current_epoch = max(data["epoch"].values) + 1
             self.current_epoch = current_epoch
             console.info(f"load log file and epoch {current_epoch}")
@@ -163,11 +163,11 @@ class AbstractTrainer:
 
         df = pd.DataFrame(data_entry)
 
-        if isfile(self.training_log_file):
-            with open(self.training_log_file, "a") as f:
+        if isfile(self.get_log_file()):
+            with open(self.get_log_file(), "a") as f:
                 df.to_csv(f, header=False)
         else:
-            with open(self.training_log_file, "w") as f:
+            with open(self.get_log_file(), "w") as f:
                 df.to_csv(f, header=True)
 
     def run(self, dl_train, dl_val):
