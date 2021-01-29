@@ -1,6 +1,3 @@
 from distutils.core import setup
 
-setup(
-    name="junn",
-    version="1.0.4",
-    packages=["junn"])
+setup(name="junn", version="2.0.0", packages=["junn"])
