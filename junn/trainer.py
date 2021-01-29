@@ -5,7 +5,7 @@ import shutil
 from abc import abstractmethod
 from tqdm import tqdm
 from torch.utils.tensorboard import SummaryWriter
-from os.path import isfile, isdir, join, isdir
+from os.path import isfile, isdir, join
 from os import makedirs
 import numpy as np
 import pandas as pd
