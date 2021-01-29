@@ -46,7 +46,7 @@ class AbstractTrainer:
         # --- initialize ---
         # ~~~~~~~~~~~~~~~~~~
         train_dir = self.get_train_dir()
-        if force_new_training:
+        if force_new_training and isdir(train_dir):
             console.warning(f"deleting {train_dir}")
             shutil.rmtree(train_dir)
 
