@@ -207,9 +207,9 @@ class AbstractTrainer:
                 for name in self.loss_names():
                     train_losses.append(np.mean(Train_losses[name]))
 
-                    train_tqdm.set_description(
-                        "[train] " + self.format_loss(train_losses)
-                    )
+                train_tqdm.set_description(
+                    "[train] " + self.format_loss(train_losses)
+                )
 
             # ~~ EVAL STEP ~~
             if dl_val is not None:
