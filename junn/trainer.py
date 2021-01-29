@@ -56,7 +56,7 @@ class AbstractTrainer:
                 console.warning(f"create {train_dir}")
             makedirs(train_dir)
         elif verbose:
-            console.verbose(f"found train dir {train_dir}")
+            console.info(f"found train dir {train_dir}")
             
         # -- save parameters --
         fname_params = join(train_dir, "train_params.json")
