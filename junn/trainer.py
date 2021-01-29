@@ -41,6 +41,7 @@ class AbstractTrainer:
         self.max_epoch = max_epoch
         self.verbose = verbose
         self.device = device
+        self.models = models
 
         # ~~~~~~~~~~~~~~~~~~
         # --- initialize ---
