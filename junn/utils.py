@@ -55,10 +55,10 @@ def save_models(models: Dict, epoch: int, training_path: str, save_for_epoch=Tru
             fname,
         )
         if save_for_epoch:
-            training_path = join(training_path, "per_epoch")
-            if not isdir(training_path):
-                makedirs(training_path)
-            fname = join(training_path, name + "_%05d.pth" % epoch)
+            training_path_ep = join(training_path, "per_epoch")
+            if not isdir(training_path_ep):
+                makedirs(training_path_ep)
+            fname = join(training_path_ep, name + "_%05d.pth" % epoch)
             torch.save(
                 {
                     "epoch": epoch,
