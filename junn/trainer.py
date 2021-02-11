@@ -115,7 +115,7 @@ class AbstractTrainer:
     def prettyprint_number_of_parameters(self):
         """for param numbers"""
         for name in sorted(self.models.keys()):
-            n_params = utils.prettyprint_number_of_parameters(self.modes[name][0])
+            n_params = utils.prettyprint_number_of_parameters(self.models[name][0])
             console.info(f"{name}: {n_params}")
 
     def get_train_dir(self):
