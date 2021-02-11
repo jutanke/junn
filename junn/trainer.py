@@ -36,6 +36,7 @@ class AbstractTrainer:
         assert isinstance(models, dict)
         assert isinstance(train_params, dict)
         torch.manual_seed(model_seed)
+        np.random.seed(model_seed)
         self.project_folder = project_folder
         self.unique_name = utils.uniqueify(train_params)
         self.max_epoch = max_epoch
